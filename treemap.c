@@ -18,15 +18,14 @@ struct TreeMap {
     TreeNode * current;
     int (*lower_than) (void* key1, void* key2);
 };
-/*Compara dos claves usando la función lower_than. Si key1 no es menor que key2 y key2 no es menor que key1, 
-entonces son iguales. Es útil porque el árbol no guarda claves duplicadas.*/
+/*verificar si son iguales*/
 int is_equal(TreeMap* tree, void* key1, void* key2){
     if(tree->lower_than(key1,key2)==0 &&  
         tree->lower_than(key2,key1)==0) return 1;
     else return 0;
 }
 
-/*Crea un nuevo nodo del árbol. Reserva memoria, guarda la clave y el valor, y pone sus punteros left, right y parent en NULL.*/
+/*Reserva memoria, guarda la clave y el valor, y pone sus punteros left, right y parent en NULL.*/
 TreeNode * createTreeNode(void* key, void * value) {
     TreeNode * new = (TreeNode *)malloc(sizeof(TreeNode));
     if (new == NULL) return NULL;
@@ -36,9 +35,7 @@ TreeNode * createTreeNode(void* key, void * value) {
     new->parent = new->left = new->right = NULL;
     return new;
 }
-/*Inicializa la raíz y el nodo actual como NULL.
-
-Guarda la función de comparación lower_than.*/
+/*reserva memoria y define variables*/
 TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2)) {
     TreeMap * map = (TreeMap *)malloc(sizeof(TreeMap));
         if (map == NULL) return NULL;
@@ -51,17 +48,10 @@ TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2)) {
 }
 
 /*-Si el árbol está vacío, el nuevo nodo se vuelve la raíz.
-
--Recorre el árbol comparando claves:
-
 -Si encuentra una clave igual, no inserta nada (no se permiten duplicados).
-
 -Si la clave es menor, va al subárbol izquierdo.
-
 -Si es mayor, al derecho.
-
 -Crea el nuevo nodo e inserta en la posición encontrada.
-
 Actualiza tree->current al nodo insertado.*/
 void insertTreeMap(TreeMap* tree, void* key, void* value) {
     if (tree->root == NULL) {
