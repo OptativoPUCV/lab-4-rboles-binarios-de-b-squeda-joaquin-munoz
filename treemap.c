@@ -227,13 +227,11 @@ Pair * nextTreeMap(TreeMap * tree) {
 
     TreeNode * node = tree->current;
 
-    // if right subtree exists
     if (node->right != NULL) {
         tree->current = minimum(node->right);
         return tree->current->pair;
     }
 
-    // go up until we find a node that is left child of its parent
     TreeNode* parent = node->parent;
     while (parent != NULL && parent->right == node) {
         node = parent;
